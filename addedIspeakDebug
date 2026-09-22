@@ -1,0 +1,93 @@
+#include <stdio.h>
+
+#define MAXN 100
+#define MAXM 100
+
+int N, M, r, c;
+int grid[MAXN][MAXM];
+int peak_r[];
+int peak_c[];
+
+/**
+ * Returns 1 if the cell at (r, c) is a peak, 0 otherwise.
+ * A peak must be strictly greater than all existing neighbors.
+ */
+int is_peak(int r, int c) {
+    // TODO: Define the relative positions of the 8 neighbors
+    // (North, South, East, West, and the 4 diagonals).
+    //check north
+    //printf("DEBUG: made it into is_peak\n");
+
+    if (grid[r][c] <= grid[r-1][c-1]){
+        printf("DEGBUG: checked NW\n");
+        return 0;
+    } else if (grid[r][c] <= grid[r-1][c]){
+        printf("DEGBUG: checked N\n");
+        return 0;
+    }else if (grid[r][c] <= grid[r-1][c+1]){
+        printf("DEGBUG: checked NE\n");
+        return 0;
+    }else if (grid[r][c] <= grid[r][c+1]){
+        printf("DEGBUG: checked E\n");
+        return 0;
+    }else if (grid[r][c] <= grid[r+1][c+1]){
+        printf("DEGBUG: checked SE\n");
+        return 0;
+    }else if (grid[r][c] <= grid[r+1][c]){
+        printf("DEGBUG: checked S\n");
+        return 0;
+    }else if (grid[r][c] <= grid[r+1][c-1]){
+        printf("DEGBUG: checked SW\n");
+        return 0;
+    }else if (grid[r][c] <= grid[r][c-1]){
+        printf("DEGBUG: checked W\n");
+        return 0;
+    } else {
+        printf("DEBUG: Returned positive\n")
+        return 1;
+    }
+    
+    // TODO: Loop through each neighbor.
+    // CRITICAL HINT: Before checking grid[nr][nc], you MUST ensure 
+    // that nr and nc are within the bounds (0 to N-1 and 0 to M-1).
+    
+    return 1; // Placeholder
+}
+
+int main() {
+    // Read dimensions
+    if (scanf("%d %d", &N, &M) != 2) {
+        return 1;
+    }
+
+    // TODO: Read the grid values from stdin using nested loops.
+    for (int i = 0; i < N; i++){
+        for (int j = 0; j < M; j++){
+            scanf("%d", grid[i][j]);
+        }
+    }
+    
+    // TODO: Iterate over every cell (i, j) in the grid.
+    for (int i = 0; i < N*M; i++){
+        for (int j = 0; j < N*M; j++){
+            r = i;
+            c = j; 
+                        // If is_peak(i, j) is true, store the coordinates.
+
+            if (is_peak(r, c)){
+                peak_r[r] = r;
+                peak_c[c] = c;
+                printf("%d %d", r, c);
+            }
+        }
+    }
+    // You can use two arrays like peak_r[MAXN*MAXM] and peak_c[MAXN*MAXM] 
+    // to store the results before printing.
+
+    // TODO: Print the total count of peaks.
+    
+    // TODO: Print each stored (row, col) pair. 
+    // Since you iterate by row then column, they will already be sorted!
+
+    return 0;
+}
