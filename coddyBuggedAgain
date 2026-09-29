@@ -1,0 +1,69 @@
+
+#include <stdio.h>
+
+int main() {
+    int N, M;
+
+    scanf("%d %d", &N, &M);
+
+    int grid[N][M];
+
+    // Read the grid
+    for (int row = 0; row < N; row++) {
+        for (int col = 0; col < M; col++) {
+            scanf("%d", &grid[row][col]);
+        }
+    }
+
+    // All 8 possible neighbor directions
+    int directions[8][2] = {
+        {-1, -1}, {-1, 0}, {-1, 1},
+        {0, -1},           {0, 1},
+        {1, -1},  {1, 0},  {1, 1}
+    };
+
+    int peakRows[N * M];
+    int peakCols[N * M];
+    int peakCount = 0;
+
+    // Check every cell
+    for (int row = 0; row < N; row++) {
+        for (int col = 0; col < M; col++) {
+
+            int isPeak = 1;
+
+            // Check all 8 neighbors
+            for (int d = 0; d < 8; d++) {
+                int neighborRow = row + directions[d][0];
+                int neighborCol = col + directions[d][1];
+
+                // Ignore neighbors outside the grid
+                if (neighborRow >= 0 && neighborRow < N &&
+                    neighborCol >= 0 && neighborCol < M) {
+
+                    // Neighbor must be strictly lower
+                    if (grid[neighborRow][neighborCol] >= grid[row][col]) {
+                        isPeak = 0;
+                        break;
+                    }
+                }
+            }
+
+            if (isPeak) {
+                peakRows[peakCount] = row;
+                peakCols[peakCount] = col;
+                peakCount++;
+            }
+        }
+    }
+
+    // Output number of peaks
+    printf("%d\n", peakCount);
+
+    // Output coordinates
+    for (int i = 0; i < peakCount; i++) {
+        printf("%d %d\n", peakRows[i], peakCols[i]);
+    }
+
+    return 0;
+}
